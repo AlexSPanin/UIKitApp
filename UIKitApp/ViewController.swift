@@ -58,15 +58,28 @@ class ViewController: UIViewController {
     }
     @IBAction func buttonAction() {
         guard let inputText = textField.text, !inputText.isEmpty else {
-            print ("Empty")
+            // print ("Empty")
+            showAlert(title: "Empty", message: "Please Enter")
             return
         }
         if let _ = Double(inputText) {
-            print ("Number")
+            // print ("Number")
+            showAlert(title: "Number", message: "Please Enter")
             return
         }
         mainLabel.text = textField.text
+        textField.text = ""
         
     }
 }
-
+// MARK: - Private Methods
+extension ViewController {
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) {_ in
+            self.textField.text = ""
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+}
